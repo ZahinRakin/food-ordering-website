@@ -28,114 +28,115 @@ img {
   margin: 0 auto;
   max-width: 80rem;
   place-content: center;
-  .product-type-plus-product-holder {
-    position: relative;
+}
 
-    .product-type {
-      /*desserts*/
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background-color: hsl(20, 50%, 98%);
-      font-size: 3rem;
-    }
+.product-type-plus-product-holder {
+  position: relative;
 
-    .product-holder {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
+  .product-type {
+    /*desserts*/
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: hsl(20, 50%, 98%);
+    font-size: 3rem;
+  }
+}
 
-      .product {
-        line-height: 2rem;
-        max-width: 430px;
+.product-holder {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
 
-        .product-img-holder {
-          border-radius: .7rem;
-          position: relative;
-          margin-bottom: 3rem;
+.product {
+  line-height: 2rem;
+  max-width: 430px;
+}
 
-          .add-to-cart-button {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translate(-50%, 50%);
-        
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        
-            padding: 1rem 2rem;
-            text-wrap: nowrap;
-            font-size: 90%;
-        
-            border: 1px solid gray;
-            border-radius: 50px;
-            font-weight: bold;
-            background-color: white;
-        
-            img {
-              width: 20%;
-            }
-          }
+.product-img-holder {
+  border-radius: .7rem;
+  position: relative;
+  margin-bottom: 3rem;
 
-          .product-img {
-            width: 100%;
-            object-fit: cover;
-            border-radius: .7rem;
-          }
-        }
+  .add-to-cart-button {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
 
-        .product-name {
-          color: gray;
-          font-size: 1.1rem;
-        }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 
-        .product-description {
-          font-size: 1.3rem;
-          font-weight: bold;
-        }
+    padding: 1rem 2rem;
+    text-wrap: nowrap;
+    font-size: 90%;
 
-        .product-price {
-          font-size: 1.3rem;
-          color: hsl(14, 86%, 42%);
-          font-weight: bold;
-        }
-      }
+    border: 1px solid gray;
+    border-radius: 50px;
+    font-weight: bold;
+    background-color: white;
+
+    img {
+      width: 20%;
     }
   }
 
-  .checkout-section {
-    padding-top: 1rem;
+  .product-img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: .7rem;
+  }
+}
 
-    .checkout {
-      background-color: white;
-      max-width: 430px;
-      padding: 2.3rem 1.5rem 4rem;
-      border-radius: .7rem;
+.product-name {
+  color: gray;
+  font-size: 1.1rem;
+}
 
-      .cart-quantity {
-        font-size: 2rem;
-        font-weight: bolder;
-        color: hsl(14, 86%, 42%);
+.product-description {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.product-price {
+  font-size: 1.3rem;
+  color: hsl(14, 86%, 42%);
+  font-weight: bold;
+}
+
+.checkout-section {
+  padding-top: 1rem;
+
+  .checkout {
+    background-color: white;
+    max-width: 430px;
+    padding: 2.3rem 1.5rem 4rem;
+    border-radius: .7rem;
+
+    .cart-quantity {
+      font-size: 2rem;
+      font-weight: bolder;
+      color: hsl(14, 86%, 42%);
+    }
+
+    .render-place {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+
+      .empty-cart-img {
+        height: 11rem;
       }
 
-      .render-place {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-
-        .empty-cart-img {
-          height: 11rem;
-        }
-
-        .render-here {
-          color: hsl(7, 20%, 60%);
-          font-weight: bold;
-          font-size: 1.2rem;
-          text-align: center;
-        }
+      .render-here {
+        color: hsl(7, 20%, 60%);
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-align: center;
       }
     }
   }
