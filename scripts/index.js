@@ -81,8 +81,9 @@ function addToCart(){
         console.log('click plus button'); //testing.
         const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
         let quantity = Number(quantityElem.innerText);
+        console.log('fresh getting from the html:', quantity) //testing
         quantity++;
-        console.log(quantity); //testing
+        console.log("after increment: ", quantity); //testing
         quantityElem.innerHTML = `${quantity}`; //this isn't updating the quantity?
       });
       //decrement
@@ -91,9 +92,9 @@ function addToCart(){
         console.log('click minus button'); //testing.
         const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
         let quantity = Number(quantityElem.innerText);
+        console.log('fresh getting from the html:', quantity) //testing
         quantity--;
-        //here add the quantity zero logic.
-        console.log(quantity); //testing
+        console.log('after decrement: ', quantity); //testing
         quantityElem.innerHTML = `${quantity}`; //this isn't updating the quantity?
       });
     });
