@@ -3,6 +3,7 @@ const TABLET = 768;
 const COMPUTER = 1200;
 
 renderProducts();
+window.addEventListener('resize', renderProducts);
 
 function renderProducts(){
   let productHTML = ``;
@@ -26,7 +27,7 @@ function renderProducts(){
         imageUrl = elem.image.mobile;
       } else if(width <= TABLET) {
         imageUrl = elem.image.tablet;
-      } else if(width <= COMPUTER) {
+      } else {
         imageUrl = elem.image.desktop;
       }
       productHTML += `
