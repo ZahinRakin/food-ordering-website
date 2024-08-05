@@ -38,7 +38,7 @@ function renderProducts(){
                 Add to Cart
               </div>
             </button>
-            <img src=".${imageUrl}" alt="${elem.category}" class="product-img product-img-${productNo}">
+            <img src=".${imageUrl}" alt="${elem.category}" class="product-img js-product-img-${productNo}">
           </div>
           <div class="product-name">
             ${elem.category}
@@ -60,11 +60,16 @@ function renderProducts(){
   }
 }
 
-function addToCart(){
-  const buttonElement = document.querySelectorAll(".js-add-to-cart-button");
-  buttonElement.forEach((elem)=>{
+function addToCart() {
+  const buttonElements = document.querySelectorAll(".js-add-to-cart-button");
+  buttonElements.forEach((elem) => {
     const buttonNo = elem.dataset.buttonNo;
-    elem.addEventListener("click", ()=>{
+
+    function handleClick() {
+      const productImg = document.querySelector(`.js-product-img-${buttonNo}`);
+      if (!productImg.classList.contains("product-img-pressed")) {
+        productImg.classList.add("product-img-pressed");
+      }
       elem.classList.add("add-to-cart-button-pressed");
       elem.innerHTML = `
         <button class="plus-minus-button js-minus-button-${buttonNo}">
@@ -75,30 +80,40 @@ function addToCart(){
           <img src="../assets/images/icon-increment-quantity.svg" alt="increment-icon">
         </button>
       `;
-      //increment
+
+      // Initialize quantity
+      let quantity = 1;
+
+      // Increment
       const plusButtonElem = document.querySelector(`.js-plus-button-${buttonNo}`);
       plusButtonElem.addEventListener("click", () => {
-        console.log('click plus button'); //testing.
-        const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
-        let quantity = Number(quantityElem.innerText);
-        console.log('fresh getting from the html:', quantity) //testing
+        console.log('Click plus button'); // testing
         quantity++;
-        console.log("after increment: ", quantity); //testing
-        quantityElem.innerHTML = `${quantity}`; //this isn't updating the quantity?
+        console.log('After increment:', quantity); // testing
+        const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
+        quantityElem.innerHTML = `${quantity}`;
+        console.log('Updated quantityElem:', quantityElem.innerHTML); // testing
       });
-      //decrement
+
+      // Decrement
       const minusButtonElem = document.querySelector(`.js-minus-button-${buttonNo}`);
       minusButtonElem.addEventListener("click", () => {
-        console.log('click minus button'); //testing.
+        console.log('Click minus button'); // testing
+        if (quantity > 1) {
+          quantity--;
+        }
+        console.log('After decrement:', quantity); // testing
         const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
-        let quantity = Number(quantityElem.innerText);
-        console.log('fresh getting from the html:', quantity) //testing
-        quantity--;
-        console.log('after decrement: ', quantity); //testing
-        quantityElem.innerHTML = `${quantity}`; //this isn't updating the quantity?
+        quantityElem.innerHTML = `${quantity}`;
+        console.log('Updated quantityElem:', quantityElem.innerHTML); // testing
       });
-    });
+
+      // Remove the click event listener to prevent re-adding event listeners
+      elem.removeEventListener("click", handleClick);
+    }
+
+    elem.addEventListener("click", handleClick);
   });
 }
 
-//if i press the plus button the 1 is getting incremented to 2 but after that nothing happens. and  (quantityElem.innerHTML = `${quantity}`;) line isn't working as intended
+
