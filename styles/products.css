@@ -91,7 +91,6 @@ img {
 }
 
 
-
 .add-to-cart-button-pressed {
   border-color: hsl(14, 86%, 42%);
   background-color: hsl(14, 86%, 42%);
@@ -120,6 +119,7 @@ img {
 
 .plus-minus-button:hover {
   background-color: hsl(14, 25%, 72%);
+  border-color:hsl(14, 86%, 42%);
 }
 
 .product-name {
