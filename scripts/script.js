@@ -1,6 +1,7 @@
 const MOBILE = 600;
 const TABLET = 768;
 const COMPUTER = 1200;
+let cart = [];
 
 renderProducts();
 window.addEventListener('resize', renderProducts);
@@ -91,29 +92,42 @@ function addToCart() {
       elem.style.height = `${buttonHeight}px`;
 
       // Initialize quantity
-      let quantity = 1;
+      const product = {
+        id: Number(buttonNo),
+        quantity: 1
+      };
+      cart.push(product);
+      renderCheckout();
       // Increment
       const plusButtonElem = document.querySelector(`.js-plus-button-${buttonNo}`);
       plusButtonElem.addEventListener("click", event => {
         event.stopPropagation();
-        quantity++;
+        product.quantity++;
         const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
-        quantityElem.innerHTML = `${quantity}`;
+        quantityElem.innerHTML = `${product.quantity}`;
+        renderCheckout();
       });
       // Decrement
       const minusButtonElem = document.querySelector(`.js-minus-button-${buttonNo}`);
       minusButtonElem.addEventListener("click", event => {
         event.stopPropagation();
-        quantity--;
+        product.quantity--;
         const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
-        quantityElem.innerHTML = `${quantity}`;
+        quantityElem.innerHTML = `${product.quantity}`;
 
-        if (quantity === 0) {
+        if (product.quantity === 0) {
           productImg.classList.remove("product-img-pressed");
           elem.innerHTML = originalButtonContent;
           elem.classList.remove("add-to-cart-button-pressed");
+          cart = cart.filter(item => item.id !== product.id);
         }
+        renderCheckout();
       });
+      
     });
   });
+}
+
+function renderCheckout(){
+  console.log("render checkout has been called.");
 }
