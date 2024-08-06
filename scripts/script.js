@@ -130,4 +130,6 @@ function addToCart() {
 
 function renderCheckout(){
   console.log("render checkout has been called.");
+  const checkoutElem = document.querySelector(".checkout");
+  checkoutElem.innerHTML = `hello world`;
 }

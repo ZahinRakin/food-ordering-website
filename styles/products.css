@@ -91,6 +91,9 @@ img {
   background-color: white;
 }
 
+.add-to-cart-button:hover {
+  background-color: hsl(20, 50%, 98%);
+}
 
 .add-to-cart-button-pressed {
   border-color: hsl(14, 86%, 42%);
@@ -141,39 +144,131 @@ img {
 
 .checkout-section {
   padding-top: 1rem;
-
-  .checkout {
-    background-color: white;
-    max-width: 430px;
-    padding: 2.3rem 1.5rem 4rem;
-    border-radius: .7rem;
-
-    .cart-quantity {
-      font-size: 2rem;
-      font-weight: bolder;
-      color: hsl(14, 86%, 42%);
-    }
-
-    .render-place {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-
-      .empty-cart-img {
-        height: 11rem;
-      }
-
-      .render-here {
-        color: hsl(7, 20%, 60%);
-        font-weight: bold;
-        font-size: 1.2rem;
-        text-align: center;
-      }
-    }
-  }
+}
+.checkout {
+  background-color: white;
+  max-width: 430px;
+  padding: 2.3rem 1.5rem 4rem;
+  border-radius: .7rem;
 }
 
+.cart-quantity {
+  font-size: 2rem;
+  font-weight: bolder;
+  color: hsl(14, 86%, 42%);
+}
+
+.render-place {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.empty-cart-img {
+  height: 11rem;
+}
+
+.render-here {
+  color: hsl(7, 20%, 60%);
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/*which product, how much, single product price and total price*/
+.render-order-summary {
+  display: flex;
+  flex-direction: column;
+}
+.order-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.3rem 0;
+  box-shadow: 0 1px 0 hsl(13, 31%, 94%);
+}
+.product-info {
+  display: flex;
+  flex-direction: column;
+}
+.ordered-product-name {
+  font-weight: bold;
+}
+.count-price-total {
+  display: flex;
+  gap: 15px;
+}
+.product-count {
+  font-weight: bold;
+  color: hsl(14, 86%, 42%);
+}
+.individual-product-price {
+  color: hsl(7, 20%, 60%);
+}
+.product-total {
+  font-weight: bold;
+  color: hsl(12, 20%, 44%);
+}
+.cross-button {
+  background-color: transparent;
+  padding: 3px;
+  border: 1px solid hsl(14, 25%, 72%);
+  /* aspect-ratio: 1/1; */
+  border-radius: 50%;
+}
+.cross-button:hover {
+  background-color: hsl(0, 0%, 90%);
+}
+.cross-button > img {
+  height: 10px;
+  aspect-ratio: 1/1;
+}
+/*order total section*/
+.order-total-section {
+  padding: 1.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.order-total-text {
+  color: hsl(14, 65%, 9%);
+  font-weight: 500;
+}
+.render-total {
+  font-size: 1.5rem;
+  font-weight: bolder;
+}
+/*carbon neutral*/
+.carbon-neutral {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  padding: 1.2rem 0;
+  background-color: hsl(20, 50%, 98%);
+  border-radius: 10px;
+}
+.carbon-neutral > img {
+
+}
+.carbon-neutral div {
+
+}
+.confirm-order-button {
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 1.2rem;
+  border-radius: 50px;
+  background-color: hsl(14, 86%, 42%);
+  border: none;
+  color: white;
+  margin-top: 1.8rem;
+}
+.confirm-order-button:hover {
+  background-color: hsl(14, 75%, 51%);
+}
+
+/*media query section*/
 @media (min-width: 768px) {
   .holder-of-all {
       grid-template-columns: 2fr 1fr;
