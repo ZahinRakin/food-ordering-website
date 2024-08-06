@@ -70,10 +70,7 @@ function addToCart() {
     const buttonNo = elem.dataset.buttonNo;
     const originalButtonContent = elem.innerHTML; // Store the original button content
 
-    function handleClick() {
-      // Remove the click event listener to prevent re-adding event listeners
-      // elem.removeEventListener("click", handleClick);
-
+    elem.addEventListener("click", () => {
       const productImg = document.querySelector(`.js-product-img-${buttonNo}`);
       if (!productImg.classList.contains("product-img-pressed")) {
         productImg.classList.add("product-img-pressed");
@@ -81,7 +78,6 @@ function addToCart() {
       if (!elem.classList.contains("add-to-cart-button-pressed")) {
         elem.classList.add("add-to-cart-button-pressed");
       }
-
       elem.innerHTML = `
         <button class="plus-minus-button js-minus-button-${buttonNo}">
           <img src="../assets/images/icon-decrement-quantity.svg" alt="decrement-icon">
@@ -96,18 +92,18 @@ function addToCart() {
 
       // Initialize quantity
       let quantity = 1;
-
       // Increment
       const plusButtonElem = document.querySelector(`.js-plus-button-${buttonNo}`);
-      plusButtonElem.addEventListener("click", () => {
+      plusButtonElem.addEventListener("click", event => {
+        event.stopPropagation();
         quantity++;
         const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
         quantityElem.innerHTML = `${quantity}`;
       });
-
       // Decrement
       const minusButtonElem = document.querySelector(`.js-minus-button-${buttonNo}`);
-      minusButtonElem.addEventListener("click", () => {
+      minusButtonElem.addEventListener("click", event => {
+        event.stopPropagation();
         quantity--;
         const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
         quantityElem.innerHTML = `${quantity}`;
@@ -116,17 +112,8 @@ function addToCart() {
           productImg.classList.remove("product-img-pressed");
           elem.innerHTML = originalButtonContent;
           elem.classList.remove("add-to-cart-button-pressed");
-
-          // Reattach the click event listener to allow re-adding to cart
-          elem.addEventListener("click", handleClick, { once: true });
         }
       });
-    }
-
-    // Attach the click event listener initially
-    elem.addEventListener("click", handleClick, { once: true });
+    });
   });
 }
-
-
-
