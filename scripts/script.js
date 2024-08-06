@@ -3,6 +3,7 @@ const TABLET = 768;
 const COMPUTER = 1200;
 let cart = [];
 let allProducts = null;
+let defaultAddCartHTML = '';
 
 renderProducts();
 window.addEventListener('resize', renderProducts);
@@ -38,7 +39,7 @@ function renderProducts(){
       productHTML += `
         <div class="product">
           <div class="product-img-holder">
-            <button class="add-to-cart-button js-add-to-cart-button" data-button-no="${productNo}">
+            <button class="add-to-cart-button js-add-to-cart-button js-add-to-cart-button-${productNo}" data-button-no="${productNo}">
               <img src="assets/images/icon-add-to-cart.svg" alt="cart.svg">
               <div class="add-to-cart">
                 Add to Cart
@@ -74,7 +75,7 @@ function addToCart() {
     const buttonWidth = elem.clientWidth;
     const buttonHeight = elem.clientHeight;
     const buttonNo = elem.dataset.buttonNo;
-    const originalButtonContent = elem.innerHTML; // Store the original button content
+    defaultAddCartHTML = elem.innerHTML; // Store the original button content
 
     elem.addEventListener("click", () => {
       const productImg = document.querySelector(`.js-product-img-${buttonNo}`);
@@ -122,7 +123,7 @@ function addToCart() {
 
         if (product.quantity === 0) {
           productImg.classList.remove("product-img-pressed");
-          elem.innerHTML = originalButtonContent;
+          elem.innerHTML = defaultAddCartHTML;
           elem.classList.remove("add-to-cart-button-pressed");
           cart = cart.filter(item => item.id !== product.id);
           renderEmptyCheckout();
@@ -190,16 +191,20 @@ function renderCheckout(){
             </div>
           </div>
         </div>
-        <button class="cross-button">
+        <button class="cross-button js-cross-button" data-product-id="${item.id}">
           <img src="../assets/images/icon-remove-item.svg" alt="cross">
         </button>
       </div>
     `;
   });
+  if(!totalCartQuantity){
+    renderEmptyCheckout();
+  }
   document.querySelector(".totalCartQuantity")
     .innerText = `${totalCartQuantity}`;
   document.querySelector(".js-render-total")
     .innerText = `$${totalPrice}`;
+  removeCartElement();
 }
 
 function renderEmptyCheckout(){
@@ -215,4 +220,21 @@ function renderEmptyCheckout(){
         </div>
       </div>
   `;
+}
+
+
+function removeCartElement(){
+  const crossButtonElem = document.querySelectorAll(".js-cross-button");
+  crossButtonElem.forEach(crossButton => {
+    crossButton.addEventListener("click", e => {
+      const targetProductId = Number(crossButton.dataset.productId);
+      cart = cart.filter(item => item.id !== targetProductId);
+      const productImgElem = document.querySelector(`.js-product-img-${targetProductId}`);
+      const addButtonElem = document.querySelector(`.js-add-to-cart-button-${targetProductId}`);
+      productImgElem.classList.remove("product-img-pressed");
+      addButtonElem.classList.remove("add-to-cart-button-pressed");
+      addButtonElem.innerHTML = defaultAddCartHTML;
+      renderCheckout();
+    });
+  });
 }
