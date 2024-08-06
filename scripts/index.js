@@ -63,15 +63,25 @@ function renderProducts(){
 
 function addToCart() {
   const buttonElements = document.querySelectorAll(".js-add-to-cart-button");
+
   buttonElements.forEach((elem) => {
+    const buttonWidth = elem.clientWidth;
+    const buttonHeight = elem.clientHeight;
     const buttonNo = elem.dataset.buttonNo;
+    const originalButtonContent = elem.innerHTML; // Store the original button content
 
     function handleClick() {
+      // Remove the click event listener to prevent re-adding event listeners
+      // elem.removeEventListener("click", handleClick);
+
       const productImg = document.querySelector(`.js-product-img-${buttonNo}`);
       if (!productImg.classList.contains("product-img-pressed")) {
         productImg.classList.add("product-img-pressed");
       }
-      elem.classList.add("add-to-cart-button-pressed");
+      if (!elem.classList.contains("add-to-cart-button-pressed")) {
+        elem.classList.add("add-to-cart-button-pressed");
+      }
+
       elem.innerHTML = `
         <button class="plus-minus-button js-minus-button-${buttonNo}">
           <img src="../assets/images/icon-decrement-quantity.svg" alt="decrement-icon">
@@ -81,6 +91,8 @@ function addToCart() {
           <img src="../assets/images/icon-increment-quantity.svg" alt="increment-icon">
         </button>
       `;
+      elem.style.width = `${buttonWidth}px`;
+      elem.style.height = `${buttonHeight}px`;
 
       // Initialize quantity
       let quantity = 1;
@@ -88,33 +100,33 @@ function addToCart() {
       // Increment
       const plusButtonElem = document.querySelector(`.js-plus-button-${buttonNo}`);
       plusButtonElem.addEventListener("click", () => {
-        console.log('Click plus button'); // testing
         quantity++;
-        console.log('After increment:', quantity); // testing
         const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
         quantityElem.innerHTML = `${quantity}`;
-        console.log('Updated quantityElem:', quantityElem.innerHTML); // testing
       });
 
       // Decrement
       const minusButtonElem = document.querySelector(`.js-minus-button-${buttonNo}`);
       minusButtonElem.addEventListener("click", () => {
-        console.log('Click minus button'); // testing
-        if (quantity > 1) {
-          quantity--;
-        }
-        console.log('After decrement:', quantity); // testing
+        quantity--;
         const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
         quantityElem.innerHTML = `${quantity}`;
-        console.log('Updated quantityElem:', quantityElem.innerHTML); // testing
-      });
 
-      // Remove the click event listener to prevent re-adding event listeners
-      elem.removeEventListener("click", handleClick);
+        if (quantity === 0) {
+          productImg.classList.remove("product-img-pressed");
+          elem.innerHTML = originalButtonContent;
+          elem.classList.remove("add-to-cart-button-pressed");
+
+          // Reattach the click event listener to allow re-adding to cart
+          elem.addEventListener("click", handleClick, { once: true });
+        }
+      });
     }
 
-    elem.addEventListener("click", handleClick);
+    // Attach the click event listener initially
+    elem.addEventListener("click", handleClick, { once: true });
   });
 }
+
 
 
