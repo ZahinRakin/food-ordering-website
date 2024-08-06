@@ -2,6 +2,7 @@ const MOBILE = 600;
 const TABLET = 768;
 const COMPUTER = 1200;
 let cart = [];
+let allProducts = null;
 
 renderProducts();
 window.addEventListener('resize', renderProducts);
@@ -14,7 +15,10 @@ function renderProducts(){
         throw new Error("HTTP error! status: response.status");
       }
       return response.json();})
-    .then((data) => renderProductHTML(data))
+    .then((data) => {
+      allProducts = data;
+      renderProductHTML(data);
+    })
     .catch((error) => {
       console.error(error);}); //got the data from the json file. there are three ways to fetch data. see geekforgeeks
 
@@ -58,6 +62,7 @@ function renderProducts(){
     
     document.querySelector(".js-product-holder")
       .innerHTML = productHTML; // here the product html is generated.
+    renderEmptyCheckout();
     addToCart();
   }
 }
@@ -120,6 +125,7 @@ function addToCart() {
           elem.innerHTML = originalButtonContent;
           elem.classList.remove("add-to-cart-button-pressed");
           cart = cart.filter(item => item.id !== product.id);
+          renderEmptyCheckout();
         }
         renderCheckout();
       });
@@ -129,7 +135,84 @@ function addToCart() {
 }
 
 function renderCheckout(){
-  console.log("render checkout has been called.");
   const checkoutElem = document.querySelector(".checkout");
-  checkoutElem.innerHTML = `hello world`;
+  checkoutElem.innerHTML = `
+    <div class="cart-quantity">
+        Your Cart (<span class="totalCartQuantity">0</span>)
+    </div>
+    <div class="render-order-summary js-render-order-summary">
+      <!--here the cart item's html generated inshallah-->
+    </div>
+
+    <div class="order-total-section">
+      <div class="order-total-text">
+        Order Total
+      </div>
+      <div class="js-render-total render-total">
+
+      </div>
+    </div>
+
+    <div class="carbon-neutral">
+      <img src="assets/images/icon-carbon-neutral.svg" alt="carbon neutral img" class="carbon-neutral-img">
+      <div>This is a <strong>carbon-neutral</strong> delivery</div>
+    </div>
+
+    <button class="confirm-order-button">
+      Confirm Order
+    </button>
+  `;
+
+  let totalCartQuantity = 0;
+  let totalPrice = 0;
+  cart.forEach(item => {
+    const product = allProducts[item.id];
+    const productCount = item.quantity;
+    totalCartQuantity += productCount;
+    const productTotal = product.price * productCount;
+    totalPrice += productTotal;
+    const renderCheckoutElem = document.querySelector(".js-render-order-summary");
+    renderCheckoutElem.innerHTML += `
+      <div class="order-summary">
+        <div class="product-info">
+          <div class="ordered-product-name">
+            ${product.name}
+          </div>
+          <div class="count-price-total">
+            <div class="product-count">
+              ${productCount}x
+            </div>
+            <div class="individual-product-price">
+              @ $${product.price}
+            </div>
+            <div class="product-total">
+              $${productTotal}
+            </div>
+          </div>
+        </div>
+        <button class="cross-button">
+          <img src="../assets/images/icon-remove-item.svg" alt="cross">
+        </button>
+      </div>
+    `;
+  });
+  document.querySelector(".totalCartQuantity")
+    .innerText = `${totalCartQuantity}`;
+  document.querySelector(".js-render-total")
+    .innerText = `$${totalPrice}`;
+}
+
+function renderEmptyCheckout(){
+  const checkoutElem = document.querySelector(".checkout");
+  checkoutElem.innerHTML = `
+      <div class="cart-quantity">
+        Your Cart (<span class="totalCartQuantity">0</span>)
+      </div>
+      <div class="render-place">
+        <img src="../assets/images/illustration-empty-cart.svg" alt="empty-cart" class="empty-cart-img">
+        <div class="render-here">
+          Your added items will appear here
+        </div>
+      </div>
+  `;
 }

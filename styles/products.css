@@ -91,10 +91,6 @@ img {
   background-color: white;
 }
 
-.add-to-cart-button:hover {
-  background-color: hsl(20, 50%, 98%);
-}
-
 .add-to-cart-button-pressed {
   border-color: hsl(14, 86%, 42%);
   background-color: hsl(14, 86%, 42%);
