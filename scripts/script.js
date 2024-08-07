@@ -54,7 +54,7 @@ function renderProducts(){
             ${elem.name}
           </div>
           <div class="product-price">
-            $${elem.price}
+            $${elem.price.toFixed(2)}
           </div>
         </div> 
       `;
@@ -72,66 +72,67 @@ function addToCart() {
   const buttonElements = document.querySelectorAll(".js-add-to-cart-button");
 
   buttonElements.forEach((elem) => {
-    const buttonWidth = elem.clientWidth;
-    const buttonHeight = elem.clientHeight;
-    const buttonNo = elem.dataset.buttonNo;
-    defaultAddCartHTML = elem.innerHTML; // Store the original button content
+    elem.addEventListener("click", () => handleClick(elem), {once: true});
+  });
+}
 
-    elem.addEventListener("click", () => {
-      const productImg = document.querySelector(`.js-product-img-${buttonNo}`);
-      if (!productImg.classList.contains("product-img-pressed")) {
-        productImg.classList.add("product-img-pressed");
-      }
-      if (!elem.classList.contains("add-to-cart-button-pressed")) {
-        elem.classList.add("add-to-cart-button-pressed");
-      }
-      elem.innerHTML = `
-        <button class="plus-minus-button js-minus-button-${buttonNo}">
-          <img src="../assets/images/icon-decrement-quantity.svg" alt="decrement-icon">
-        </button>
-        <div class="quantity-render-place-${buttonNo}">1</div>
-        <button class="plus-minus-button js-plus-button-${buttonNo}">
-          <img src="../assets/images/icon-increment-quantity.svg" alt="increment-icon">
-        </button>
-      `;
-      elem.style.width = `${buttonWidth}px`;
-      elem.style.height = `${buttonHeight}px`;
+function handleClick(elem) {
+  const buttonWidth = elem.clientWidth;
+  const buttonHeight = elem.clientHeight;
+  const buttonNo = elem.dataset.buttonNo;
+  defaultAddCartHTML = elem.innerHTML;
+  const productImg = document.querySelector(`.js-product-img-${buttonNo}`);
+  if (!productImg.classList.contains("product-img-pressed")) {
+    productImg.classList.add("product-img-pressed");
+  }
+  if (!elem.classList.contains("add-to-cart-button-pressed")) {
+    elem.classList.add("add-to-cart-button-pressed");
+  }
+  elem.innerHTML = `
+    <button class="plus-minus-button js-minus-button-${buttonNo}">
+      <img src="../assets/images/icon-decrement-quantity.svg" alt="decrement-icon">
+    </button>
+    <div class="quantity-render-place-${buttonNo} quantity-render-place">1</div>
+    <button class="plus-minus-button js-plus-button-${buttonNo}">
+      <img src="../assets/images/icon-increment-quantity.svg" alt="increment-icon">
+    </button>
+  `;
+  elem.style.width = `${buttonWidth}px`;
+  elem.style.height = `${buttonHeight}px`;
 
-      // Initialize quantity
-      const product = {
-        id: Number(buttonNo),
-        quantity: 1
-      };
-      cart.push(product);
-      renderCheckout();
-      // Increment
-      const plusButtonElem = document.querySelector(`.js-plus-button-${buttonNo}`);
-      plusButtonElem.addEventListener("click", event => {
-        event.stopPropagation();
-        product.quantity++;
-        const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
-        quantityElem.innerHTML = `${product.quantity}`;
-        renderCheckout();
-      });
-      // Decrement
-      const minusButtonElem = document.querySelector(`.js-minus-button-${buttonNo}`);
-      minusButtonElem.addEventListener("click", event => {
-        event.stopPropagation();
-        product.quantity--;
-        const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
-        quantityElem.innerHTML = `${product.quantity}`;
+  // Initialize quantity
+  const product = {
+    id: Number(buttonNo),
+    quantity: 1
+  };
+  cart.push(product);
+  renderCheckout();
+  // Increment
+  const plusButtonElem = document.querySelector(`.js-plus-button-${buttonNo}`);
+  plusButtonElem.addEventListener("click", event => {
+    event.stopPropagation();
+    product.quantity++;
+    const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
+    quantityElem.innerHTML = `${product.quantity}`;
+    renderCheckout();
+  });
+  // Decrement
+  const minusButtonElem = document.querySelector(`.js-minus-button-${buttonNo}`);
+  minusButtonElem.addEventListener("click", event => {
+    event.stopPropagation();
+    product.quantity--;
+    const quantityElem = document.querySelector(`.quantity-render-place-${buttonNo}`);
+    quantityElem.innerHTML = `${product.quantity}`;
 
-        if (product.quantity === 0) {
-          productImg.classList.remove("product-img-pressed");
-          elem.innerHTML = defaultAddCartHTML;
-          elem.classList.remove("add-to-cart-button-pressed");
-          cart = cart.filter(item => item.id !== product.id);
-          renderEmptyCheckout();
-        }
-        renderCheckout();
-      });
-      
-    });
+    if (product.quantity === 0) {
+      productImg.classList.remove("product-img-pressed");
+      elem.innerHTML = defaultAddCartHTML;
+      elem.classList.remove("add-to-cart-button-pressed");
+      cart = cart.filter(item => item.id !== product.id);
+      renderEmptyCheckout();
+      elem.addEventListener("click", () => handleClick(elem), {once: true});
+    }
+    renderCheckout();
   });
 }
 
@@ -177,7 +178,7 @@ function renderCheckout(){
     const product = allProducts[item.id];
     const productCount = item.quantity;
     totalCartQuantity += productCount;
-    const productTotal = product.price * productCount;
+    const productTotal = ((product.price*100) * productCount)/100;
     totalPrice += productTotal;
     const renderCheckoutElem = document.querySelector(".js-render-order-summary");
     renderCheckoutElem.innerHTML += `
@@ -191,10 +192,10 @@ function renderCheckout(){
               ${productCount}x
             </div>
             <div class="individual-product-price">
-              @ $${product.price}
+              @ $${product.price.toFixed(2)}
             </div>
             <div class="product-total">
-              $${productTotal}
+              $${productTotal.toFixed(2)}
             </div>
           </div>
         </div>
@@ -210,7 +211,7 @@ function renderCheckout(){
   document.querySelector(".totalCartQuantity")
     .innerText = `${totalCartQuantity}`;
   document.querySelector(".js-render-total")
-    .innerText = `$${totalPrice}`;
+    .innerText = `$${totalPrice.toFixed(2)}`;
   removeCartElement();
 }
 
@@ -240,6 +241,7 @@ function removeCartElement(){
       const addButtonElem = document.querySelector(`.js-add-to-cart-button-${targetProductId}`);
       productImgElem.classList.remove("product-img-pressed");
       addButtonElem.classList.remove("add-to-cart-button-pressed");
+      addButtonElem.addEventListener("click", () => handleClick(addButtonElem), {once: true});
       addButtonElem.innerHTML = defaultAddCartHTML;
       renderCheckout();
     });
@@ -265,12 +267,12 @@ function generatePartialCheckout() {
               ${item.quantity}x
             </div>
             <div class="product-price">
-              @ $${pro.price}
+              @ $${pro.price.toFixed(2)}
             </div>
           </div>
         </div>
         <div class="total-due">
-          $${pro.price*item.quantity}
+          $${(((pro.price*100)*item.quantity)/100).toFixed(2)}
         </div>
       </div>
     `;
