@@ -159,10 +159,17 @@ function renderCheckout(){
       <div>This is a <strong>carbon-neutral</strong> delivery</div>
     </div>
 
-    <button class="confirm-order-button">
+    <button class="confirm-order-button js-confirm-order-button">
       Confirm Order
     </button>
   `;
+  const confirmButton = document.querySelector(".js-confirm-order-button");
+  confirmButton.addEventListener("click", () => {
+    const alertElem = document.querySelector(".js-alert-card-holder");
+    generatePartialCheckout();
+    alertElem.style.display = "flex";
+  });
+  startNew();
 
   let totalCartQuantity = 0;
   let totalPrice = 0;
@@ -226,7 +233,7 @@ function renderEmptyCheckout(){
 function removeCartElement(){
   const crossButtonElem = document.querySelectorAll(".js-cross-button");
   crossButtonElem.forEach(crossButton => {
-    crossButton.addEventListener("click", e => {
+    crossButton.addEventListener("click", () => {
       const targetProductId = Number(crossButton.dataset.productId);
       cart = cart.filter(item => item.id !== targetProductId);
       const productImgElem = document.querySelector(`.js-product-img-${targetProductId}`);
@@ -237,4 +244,47 @@ function removeCartElement(){
       renderCheckout();
     });
   });
+}
+
+function generatePartialCheckout() {
+  const partialCheck = document.querySelector(".js-partial-checkout");
+  let proHTML = ``;
+  cart.forEach(item => {
+    const pro = allProducts[item.id];
+    proHTML += `
+      <div class="holder">
+        <div class="pro-info-div">
+          <div class="thumbnail-div">
+            <img src=".${pro.image.thumbnail}" alt="${pro.category} image">
+          </div>
+          <div class="pro-name">
+            ${pro.name}
+          </div>
+          <div class="pro-count-price">
+            <div class="pro-count">
+              ${item.quantity}x
+            </div>
+            <div class="product-price">
+              @ $${pro.price}
+            </div>
+          </div>
+        </div>
+        <div class="total-due">
+          $${pro.price*item.quantity}
+        </div>
+      </div>
+    `;
+  });
+  partialCheck.innerHTML = proHTML;
+}
+
+function startNew(){
+  const alertElem = document.querySelector(".js-alert-card-holder");
+  document.querySelector(".js-start-new-button")
+    .addEventListener("click", e => {
+      e.stopPropagation();
+      alertElem.style.display = "none";
+      cart = [];
+      renderProducts();
+    });
 }

@@ -264,11 +264,107 @@ img {
   background-color: hsl(14, 75%, 51%);
 }
 
+/*alert card*/
+.alert-card-holder {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 500;
+  display: none;
+  justify-content: center;
+  align-items:end;
+}
+
+.alert-card {
+  background-color: white;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+.alert {
+  display: flex;
+  flex-direction: column;
+  gap: 2.1rem;
+}
+
+.order-confirm-text {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+.good-will {
+  color: hsl(12, 20%, 44%);
+}
+.partial-checkout {
+  background-color: hsl(13, 31%, 94%);
+  width: calc(100% - 3rem);/*here 3rem is the parent's padding*/
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  text-wrap: nowrap;
+  padding: 1.5rem;
+  gap: 1.3rem;
+}
+.holder{
+  display: grid;
+  grid-template-columns: 80% 20%;
+  max-width: 100%;
+  gap: 1rem;
+  /* justify-content: ; */
+  /* align-items: center; */
+  box-shadow: 0 1px 0 white;
+  padding-bottom: 1.3rem;
+}
+.pro-info-div {
+  display: grid;
+  justify-content: left;
+  grid-template-areas: 
+    'One Two'
+    'One Three';
+  column-gap: 20px;
+}
+.thumbnail-div {
+  grid-area: One;
+  img {
+    border-radius: 5px;
+    height: 50px;
+  }
+}
+.pro-name {
+  font-weight: bold;
+  grid-area: Two;
+  overflow: hidden;
+}
+.pro-count-price {
+  grid-area: Three;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+/*here should be product-price. but it is already mentioned above*/
+.total-due {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.start-new-button {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.2rem;
+  border-radius: 50px;
+  background-color: hsl(14, 86%, 42%);
+  border: none;
+  color: white;
+}
+.start-new-button:hover {
+  background-color: hsl(14, 75%, 51%);
+}
 /*media query section*/
 @media (min-width: 768px) {
   .holder-of-all {
       grid-template-columns: 2fr 1fr;
-      height: 2000px;
       padding-top: 4rem;
     }
   .product-holder {
@@ -293,5 +389,8 @@ img {
   .checkout {
     position: sticky;
     top: 0;
+  }
+  .alert-card-holder {
+    align-items: center;
   }
 }
