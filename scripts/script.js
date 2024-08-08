@@ -40,7 +40,7 @@ function renderProducts(){
         <div class="product">
           <div class="product-img-holder">
             <button class="add-to-cart-button js-add-to-cart-button js-add-to-cart-button-${productNo}" data-button-no="${productNo}">
-              <img src="https://github.com/ZahinRakin/food-ordering-website/tree/product-list-with-cart/assets/images/icon-add-to-cart.svg" alt="cart.svg">
+              <img src="https://zahinrakin.github.io/food-ordering-website/assets/images/icon-add-to-cart.svg" alt="cart.svg">
               <div class="add-to-cart">
                 Add to Cart
               </div>
@@ -90,11 +90,11 @@ function handleClick(elem) {
   }
   elem.innerHTML = `
     <button class="plus-minus-button js-minus-button-${buttonNo}">
-      <img src="../assets/images/icon-decrement-quantity.svg" alt="decrement-icon">
+      <img src="https://zahinrakin.github.io/food-ordering-website/assets/images/icon-decrement-quantity.svg" alt="decrement-icon">
     </button>
     <div class="quantity-render-place-${buttonNo} quantity-render-place">1</div>
     <button class="plus-minus-button js-plus-button-${buttonNo}">
-      <img src="../assets/images/icon-increment-quantity.svg" alt="increment-icon">
+      <img src="https://zahinrakin.github.io/food-ordering-website/assets/images/icon-increment-quantity.svg" alt="increment-icon">
     </button>
   `;
   elem.style.width = `${buttonWidth}px`;
@@ -156,7 +156,7 @@ function renderCheckout(){
     </div>
 
     <div class="carbon-neutral">
-      <img src="assets/images/icon-carbon-neutral.svg" alt="carbon neutral img" class="carbon-neutral-img">
+      <img src="https://zahinrakin.github.io/food-ordering-website/assets/images/icon-carbon-neutral.svg" alt="carbon neutral img" class="carbon-neutral-img">
       <div>This is a <strong>carbon-neutral</strong> delivery</div>
     </div>
 
@@ -200,7 +200,7 @@ function renderCheckout(){
           </div>
         </div>
         <button class="cross-button js-cross-button" data-product-id="${item.id}">
-          <img src="../assets/images/icon-remove-item.svg" alt="cross">
+          <img src="https://zahinrakin.github.io/food-ordering-website/assets/images/icon-remove-item.svg" alt="cross">
         </button>
       </div>
     `;
@@ -222,7 +222,7 @@ function renderEmptyCheckout(){
         Your Cart (<span class="totalCartQuantity">0</span>)
       </div>
       <div class="render-place">
-        <img src="../assets/images/illustration-empty-cart.svg" alt="empty-cart" class="empty-cart-img">
+        <img src="https://zahinrakin.github.io/food-ordering-website/assets/images/illustration-empty-cart.svg" alt="empty-cart" class="empty-cart-img">
         <div class="render-here">
           Your added items will appear here
         </div>
@@ -286,7 +286,7 @@ function generatePartialCheckout() {
         Order Total
       </div>
       <div class="render-total">
-        ${total.toFixed(2)}
+        $${total.toFixed(2)}
       </div>
     </div>
   `;
