@@ -250,9 +250,12 @@ function removeCartElement(){
 
 function generatePartialCheckout() {
   const partialCheck = document.querySelector(".js-partial-checkout");
+  let total = 0;
   let proHTML = ``;
   cart.forEach(item => {
     const pro = allProducts[item.id];
+    const price = (((pro.price*100)*item.quantity)/100);
+    total += price;
     proHTML += `
       <div class="holder">
         <div class="pro-info-div">
@@ -272,11 +275,21 @@ function generatePartialCheckout() {
           </div>
         </div>
         <div class="total-due">
-          $${(((pro.price*100)*item.quantity)/100).toFixed(2)}
+          $${price.toFixed(2)}
         </div>
       </div>
     `;
   });
+  proHTML += `
+    <div class="order-total-section">
+      <div class="order-total-text">
+        Order Total
+      </div>
+      <div class="render-total">
+        ${total.toFixed(2)}
+      </div>
+    </div>
+  `;
   partialCheck.innerHTML = proHTML;
 }
 
