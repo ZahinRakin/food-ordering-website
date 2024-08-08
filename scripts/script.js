@@ -21,20 +21,20 @@ function renderProducts(){
       renderProductHTML(data);
     })
     .catch((error) => {
-      console.error(error);}); //got the data from the json file. there are three ways to fetch data. see geekforgeeks
+      console.error(error);});
 
 
   function renderProductHTML(data) {
     let productNo = 0;
     data.forEach((elem) => {
-      let imageUrl = '';
+      let imageUrl = 'https://zahinrakin.github.io/food-ordering-website';
       const width = window.innerWidth;
       if(width <= MOBILE) {
-        imageUrl = elem.image.mobile;
+        imageUrl += elem.image.mobile.substring(1);
       } else if(width <= TABLET) {
-        imageUrl = elem.image.tablet;
+        imageUrl += elem.image.tablet.substring(1);
       } else {
-        imageUrl = elem.image.desktop;
+        imageUrl += elem.image.desktop.substring(1);
       }
       productHTML += `
         <div class="product">
