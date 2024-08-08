@@ -40,7 +40,7 @@ function renderProducts(){
         <div class="product">
           <div class="product-img-holder">
             <button class="add-to-cart-button js-add-to-cart-button js-add-to-cart-button-${productNo}" data-button-no="${productNo}">
-              <img src="assets/images/icon-add-to-cart.svg" alt="cart.svg">
+              <img src="https://github.com/ZahinRakin/food-ordering-website/tree/product-list-with-cart/assets/images/icon-add-to-cart.svg" alt="cart.svg">
               <div class="add-to-cart">
                 Add to Cart
               </div>
