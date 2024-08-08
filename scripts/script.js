@@ -45,7 +45,7 @@ function renderProducts(){
                 Add to Cart
               </div>
             </button>
-            <img src=".${imageUrl}" alt="${elem.category}" class="product-img js-product-img-${productNo}">
+            <img src="${imageUrl}" alt="${elem.category}" class="product-img js-product-img-${productNo}">
           </div>
           <div class="product-name">
             ${elem.category}
