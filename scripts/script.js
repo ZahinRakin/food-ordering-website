@@ -260,7 +260,7 @@ function generatePartialCheckout() {
       <div class="holder">
         <div class="pro-info-div">
           <div class="thumbnail-div">
-            <img src=".${pro.image.thumbnail}" alt="${pro.category} image">
+            <img src="https://zahinrakin.github.io/food-ordering-website/${pro.image.thumbnail.substring(1)}" alt="${pro.category} image">
           </div>
           <div class="pro-name">
             ${pro.name}
