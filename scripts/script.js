@@ -10,7 +10,7 @@ window.addEventListener('resize', renderProducts);
 
 function renderProducts(){
   let productHTML = ``;
-  fetch("../data.json")
+  fetch("https://zahinrakin.github.io/food-ordering-website/data.json")
     .then((response) => {
       if(!response.ok){
         throw new Error("HTTP error! status: response.status");
